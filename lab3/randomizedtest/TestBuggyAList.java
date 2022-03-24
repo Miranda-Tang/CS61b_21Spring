@@ -13,12 +13,12 @@ public class TestBuggyAList {
     public void testThreeAddThreeRemove() {
       AListNoResizing<Integer> al = new AListNoResizing<>();
       BuggyAList<Integer> bl = new BuggyAList<>();
-      al.addLast(5);
-      al.addLast(10);
-      al.addLast(15);
-      bl.addLast(5);
-      bl.addLast(10);
-      bl.addLast(15);
+      al.addLast(3);
+      al.addLast(6);
+      al.addLast(9);
+      bl.addLast(3);
+      bl.addLast(6);
+      bl.addLast(9);
 
       assertEquals(al.size(), bl.size());
 
