@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     protected T[] items;
     protected int size;
     protected int nextFirst;
@@ -15,7 +17,6 @@ public class ArrayDeque<T> implements Deque<T> {
 
     /**
      *
-     * @param index
      * @return the index after rotation (either backwards or forwards)
      */
     public int addOne(int index) {
@@ -28,7 +29,6 @@ public class ArrayDeque<T> implements Deque<T> {
 
     /**
      * resize the array so that it is neither beyond capacity nor under the usage rate at 25%
-     * @param capacity
      */
     public void resize(int capacity) {
         T[] tmp = (T[]) new Object[capacity];
@@ -63,7 +63,6 @@ public class ArrayDeque<T> implements Deque<T> {
 
     /**
      * Adds an item of type T to the front of the deque. You can assume that item is never null.
-     * @param item
      */
     @Override
     public void addFirst(T item) {
@@ -75,7 +74,6 @@ public class ArrayDeque<T> implements Deque<T> {
 
     /**
      * Adds an item of type T to the back of the deque. You can assume that item is never null.
-     * @param item
      */
     @Override
     public void addLast(T item) {
@@ -140,7 +138,6 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     /**
-     * @param index
      * @return the item at the given index. If no such item exists, returns null.
      */
     @Override
@@ -151,5 +148,52 @@ public class ArrayDeque<T> implements Deque<T> {
             gap--;
         }
         return items[index];
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int wizPos;
+        public ArrayDequeIterator() {
+            wizPos = addOne(nextFirst);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return wizPos != nextLast;
+        }
+
+        @Override
+        public T next() {
+            T returnItem = items[wizPos];
+            wizPos = addOne(wizPos);
+            return returnItem;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        ArrayDeque<T> o = (ArrayDeque<T>) obj;
+        if (size != o.size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (!this.get(i).equals(o.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

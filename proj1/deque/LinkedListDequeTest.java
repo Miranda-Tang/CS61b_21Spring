@@ -1,6 +1,10 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 
@@ -127,4 +131,46 @@ public class LinkedListDequeTest {
         }
 
     }
+
+    /* Test whether for:each works */
+    @Test
+    public void forEachTest() {
+        LinkedListDeque<String> lld = new LinkedListDeque<>();
+        lld.addLast("Anna");
+        lld.addLast("Elsa");
+        lld.addFirst("Snowman");
+        List<String> listOfItems = new ArrayList<>();
+        for (String x : lld) {
+            listOfItems.add(x);
+        }
+        String result = "{" + String.join(", ", listOfItems) + "}";
+        assertEquals("{Snowman, Anna, Elsa}", result);
+    }
+
+    @Test
+    public void isEqualsTest() {
+        LinkedListDeque<String> lld = new LinkedListDeque<>();
+        lld.addLast("Anna");
+        lld.addLast("Elsa");
+        lld.addFirst("Snowman");
+        LinkedListDeque<String> lld1 = new LinkedListDeque<>();
+        lld1.addFirst("Snowman");
+        lld1.addLast("Anna");
+        lld1.addLast("Elsa");
+        assertTrue("The result of the comparison should be true: ", lld.equals(lld1));
+
+        LinkedListDeque<String> lld2 = new LinkedListDeque<>();
+        lld2.addFirst("Snowman");
+        lld2.addLast("Anna");
+        lld2.addFirst("Elsa");
+        assertFalse("The result of the comparison should be false: ", lld.equals(lld2));
+
+        LinkedListDeque<String> lld3 = new LinkedListDeque<>();
+        LinkedListDeque<String> lld4 = null;
+        LinkedListDeque<String> lld5 = new LinkedListDeque<>();
+        assertFalse("The result of the comparison should be false: ", lld3.equals(lld4));
+        assertTrue("The result of the comparison should be true: ", lld3.equals(lld5));
+    }
+
+
 }
