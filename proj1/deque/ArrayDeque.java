@@ -19,25 +19,25 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
      *
      * @return the index after rotation (either backwards or forwards)
      */
-    public int addOne(int index) {
+    protected int addOne(int index) {
         return (index + 1) % items.length;
     }
 
-    public int minusOne(int index) {
+    private int minusOne(int index) {
         return (index + items.length - 1) % items.length;
     }
 
     /**
      * resize the array so that it is neither beyond capacity nor under the usage rate at 25%
      */
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] tmp = (T[]) new Object[capacity];
         int index = addOne(nextFirst);
         for (int i = 0; i < size; i++) {
             tmp[i] = items[index];
             index = addOne(index);
         }
-        nextFirst= capacity - 1;
+        nextFirst = capacity - 1;
         nextLast = size;
         items = tmp;
     }
@@ -45,7 +45,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     /**
      * to check whether the array is full so that it needs to be resized
      */
-    public void checkFull() {
+    private void checkFull() {
         if (size == items.length) {
             resize(size * 2);
         }
@@ -54,7 +54,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     /**
      * to check whether the array is under the required usage rate so that it needs to be resized
      */
-    public void checkWasted() {
+    private void checkWasted() {
         int len = items.length;
         if (len >= 16 && size < len / 4) {
             resize(len / 4);
@@ -152,7 +152,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private class ArrayDequeIterator implements Iterator<T> {
         private int wizPos;
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             wizPos = addOne(nextFirst);
         }
 
@@ -182,11 +182,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (obj == null) {
             return false;
         }
-        if (obj.getClass() != this.getClass()) {
+        if (!(obj instanceof  Deque)) {
             return false;
         }
-        ArrayDeque<T> o = (ArrayDeque<T>) obj;
-        if (size != o.size) {
+        Deque<T> o = (Deque<T>) obj;
+        if (size != o.size()) {
             return false;
         }
         for (int i = 0; i < size; i++) {

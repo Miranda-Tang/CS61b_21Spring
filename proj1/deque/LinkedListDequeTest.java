@@ -12,6 +12,14 @@ import static org.junit.Assert.*;
 public class LinkedListDequeTest {
 
     @Test
+    public void isEmptySizeTest() {
+        LinkedListDeque<Double> lld = new LinkedListDeque<>();
+        lld.addFirst(0.0);
+        lld.removeLast();
+        assertTrue(lld.isEmpty());
+    }
+
+    @Test
     /** Adds a few things to the list, checking isEmpty() and size() are correct,
      * finally printing the results.
      *
@@ -57,6 +65,8 @@ public class LinkedListDequeTest {
         assertNull("removeFirst() should return null when lld1 is empty", lld1.removeFirst());
 
         assertNull("removeLast() should return null when lld1 is empty", lld1.removeLast());
+
+        assertTrue(lld1.isEmpty());
     }
 
     @Test
@@ -170,6 +180,16 @@ public class LinkedListDequeTest {
         LinkedListDeque<String> lld5 = new LinkedListDeque<>();
         assertFalse("The result of the comparison should be false: ", lld3.equals(lld4));
         assertTrue("The result of the comparison should be true: ", lld3.equals(lld5));
+
+        LinkedListDeque<String> lld6 = new LinkedListDeque<>();
+        lld6.addFirst("Snowman");
+        lld6.addLast("Anna");
+        lld6.addFirst("Elsa");
+        ArrayDeque<String> ad = new ArrayDeque<>();
+        ad.addFirst("Snowman");
+        ad.addLast("Anna");
+        ad.addFirst("Elsa");
+        assertTrue("The result of the comparison should be true: ", lld6.equals(ad));
     }
 
 

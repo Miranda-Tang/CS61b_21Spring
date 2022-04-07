@@ -1,6 +1,5 @@
 package deque;
 
-import java.security.PrivateKey;
 import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
@@ -110,6 +109,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         Node tmp = sentinel.prev;
         sentinel.prev = tmp.prev;
         tmp.prev.next = sentinel;
+        size--;
         return tmp.item;
     }
 
@@ -139,7 +139,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return getRecursiveHelper(sentinel.next, index);
     }
 
-    public T getRecursiveHelper(Node p, int index) {
+    private T getRecursiveHelper(Node p, int index) {
         if (p == sentinel) {
             return null;
         }
@@ -151,7 +151,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     private class LinkedListDequeIterator implements Iterator<T> {
         private int wizPos;
-        public LinkedListDequeIterator() {
+        LinkedListDequeIterator() {
             wizPos = 0;
         }
 
@@ -179,11 +179,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         if (obj == null) {
             return false;
         }
-        if (obj.getClass() != this.getClass()) {
+        if (!(obj instanceof  Deque)) {
             return false;
         }
-        LinkedListDeque<T> o = (LinkedListDeque<T>) obj;
-        if (size != o.size) {
+        Deque<T> o = (Deque<T>) obj;
+        if (size != o.size()) {
             return false;
         }
         for (int i = 0; i < size; i++) {
