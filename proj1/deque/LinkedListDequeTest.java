@@ -189,7 +189,7 @@ public class LinkedListDequeTest {
         ad.addFirst("Snowman");
         ad.addLast("Anna");
         ad.addFirst("Elsa");
-        assertTrue("The result of the comparison should be true: ", lld6.equals(ad));
+        assertTrue("The result of the comparison should be true: ", ad.equals(lld6));
     }
 
 
